@@ -1,6 +1,6 @@
 # NOAT: Non-Overlapping Annotation Tagging
 
-NOAT is a helper class for inserting annotations as HTML tags at arbitary points in text, based on their start and end positions, while avoiding overlapping open and close tags of different type (invalid HTML).
+NOAT ("note") is a helper class for inserting annotations as HTML tags at arbitary points in text, based on their start and end positions, while avoiding overlapping open and close tags of different type (invalid HTML).
 
 The text is broken into segments, bounded by the start and end points of all of the annotations. It is then reassembled, with opening and closing tags for annotations inserted between the segments. Tags are closed and reopened as needed to prevent overlap.
 
