@@ -48,7 +48,7 @@ There are no dependencies, and even the tests can just be run directly, eg `pyth
     CoffeeScript : .add(tag, start, [end,] [attributes={}])
     Ruby         : .add(tag, start, [end,] [attributes={}])
 
-`tag` can be any string. `start` and `end` are integers describing the start and end positions of the annotations (inclusive). `end` is optional, allowing for 'collapsed' tags, (eg 'abcd<span><span>efgh'). Attributes are an object/dict/hash (CoffeeScript/Python/Ruby) of key-value attributes to be added to the tag, eg `<a href="http://example.com"></span>`. Python can also accept keyword arguments (which supersede any dict attributes).
+`tag` can be any string. `start` and `end` are integers describing the start and end positions of the annotations (inclusive). `end` is optional, allowing for 'collapsed' tags, (eg `abcd<span></span>efgh`). Attributes are an object/dict/hash (CoffeeScript/Python/Ruby) of key-value attributes to be added to the tag, eg `<a href="http://example.com"></span>`. Python can also accept keyword arguments (which supersede any dict attributes).
 
 For convenience, since `class` is a reserved word but a common annotation attribute, the attribute key `'_class'` will be converted to `'class'`, allowing for Python keyword arguments to be written as `_class="marker"`.
 
