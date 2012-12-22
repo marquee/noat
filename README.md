@@ -44,9 +44,9 @@ There are no dependencies, and even the tests can just be run directly, eg `pyth
 
 ### `.add`
 
-Python: `.add(tag, start, end, **attributes)`
-CoffeeScript: `.add(tag, start, end, attributes={})`
-Ruby: `.add(tag, start, end, attributes={})`
+    Python       : .add(tag, start, [end,] [attributes,] [**attributes])
+    CoffeeScript : .add(tag, start, [end,] [attributes={}])
+    Ruby         : .add(tag, start, [end,] [attributes={}])
 
 `tag` can be any string. `start` and `end` are integers describing the start and end positions of the annotations (inclusive). `end` is optional, allowing for 'collapsed' tags, (eg 'abcd<span><span>efgh'). Attributes are an object/dict/hash (CoffeeScript/Python/Ruby) of key-value attributes to be added to the tag, eg `<a href="http://example.com"></span>`. Python can also accept keyword arguments (which supersede any dict attributes).
 
