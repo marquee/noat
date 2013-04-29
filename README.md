@@ -1,8 +1,15 @@
 # NOAT: Non-Overlapping Annotation Tagging
 
-NOAT ("note") is a helper class for inserting annotations as HTML tags at arbitary points in text, based on their start and end positions, while avoiding overlapping open and close tags of different type (invalid HTML).
+NOAT ("note") is a helper class for inserting reference-based annotations as
+HTML tags at arbitary points in text, based on their start and end positions,
+while avoiding overlapping open and close tags of different type (invalid HTML).
+This ensures creating a well-formed HTML document that will yield a properly
+structured DOM.
 
-The text is broken into segments, bounded by the start and end points of all of the annotations. It is then reassembled, with opening and closing tags for annotations inserted between the segments. Tags are closed and reopened as needed to prevent overlap.
+The text is broken into segments, bounded by the start and end points of all of
+the annotations. It is then reassembled, with opening and closing tags for
+annotations inserted between the segments. Tags are closed and reopened as
+needed to prevent overlap.
 
 For example, given:
 
@@ -20,27 +27,36 @@ annotations = [{
 }]
 ```
 
-Simply inserting the tags at the given `start` and `end` positions would result in invalid HTML:
+Simply inserting the tags at the given `start` and `end` positions would result
+in invalid HTML:
 
 ```html
-Duis <em>mollis, est non<strong> commodo l</em>uctus, nisi erat por</strong>ttitor ligula, eget lacinia odio sem nec elit.
+Duis <em>mollis, est non<strong> commodo l</em>uctus, nisi erat por</strong>
+ttitor ligula, eget lacinia odio sem nec elit.
 ```
 
 The correct output is:
 
 ```html
-Duis <em>mollis, est non<strong> commodo l</strong></em><strong> uctus, nisi erat por</strong>ttitor ligula, eget lacinia odio sem nec elit.
+Duis <em>mollis, est non<strong> commodo l</strong></em><strong> uctus, nisi
+erat por</strong>ttitor ligula, eget lacinia odio sem nec elit.
 ```
 
-Note that the `</strong>` tag before the `strong`'s `end`, to allow the `emphasis` annotation to be closed without overlapping the `<strong>`. The `strong` annotation is then reopened with a `<strong>` and then closed at its actual end.
+Note that `</strong>` tag before the `strong`'s `end`, to allow the `emphasis`
+annotation to be closed without overlapping the `<strong>`. The `strong`
+annotation is then reopened with a `<strong>` and then closed at its actual end.
 
 
 
 ## Usage
 
-NOAT is available in three flavors: Python, CoffeeScript, and Ruby. The API is basically the same, with some slight differences for language variations. In every case, the adding of annotations is lazy, so the actual markup is not generated until the `__str__`, `toString`, or `to_s` method is called.
+NOAT is available in three flavors: Python, CoffeeScript, and Ruby. The API is
+basically the same, with some slight differences for language variations. In
+every case, the adding of annotations is lazy, so the actual markup is not
+generated until the `__str__`, `toString`, or `to_s` method is called.
 
-There are no dependencies, and even the tests can just be run directly, eg `python tests.py`.
+There are no dependencies, and even the tests can just be run directly, eg
+`python tests.py`.
 
 ### `.add`
 
@@ -48,9 +64,18 @@ There are no dependencies, and even the tests can just be run directly, eg `pyth
     CoffeeScript : .add(tag, start, [end,] [attributes={}])
     Ruby         : .add(tag, start, [end,] [attributes={}])
 
-`tag` can be any string. `start` and `end` are integers describing the start and end positions of the annotations (inclusive). `end` is optional, allowing for 'collapsed' tags, (eg `abcd<span></span>efgh`). Attributes are an object/dict/hash (CoffeeScript/Python/Ruby) of key-value attributes to be added to the tag, eg `<a href="http://example.com"></span>`. Python can also accept keyword arguments (which supersede any dict attributes).
+`tag` can be any string. `start` and `end` are integers describing the start and
+end positions of the annotations (inclusive). `end` is optional, allowing for
+'collapsed' tags, (eg `abcd<span></span>efgh`). Attributes are an
+object/dict/hash (CoffeeScript/Python/Ruby) of key-value attributes to be added
+to the tag, eg `<a href="http://example.com">link</a>`. Python can also accept
+keyword arguments (which supersede any dict attributes).
 
-For convenience, since `class` is a reserved word but a common annotation attribute, the attribute key `'_class'` will be converted to `'class'`, allowing for Python keyword arguments to be written as `_class="marker"`. The CoffeeScript and Ruby versions will do the same, even though it's less necessary.
+For convenience, since `class` is a reserved word but a common annotation
+attribute, the attribute key `'_class'` will be converted to `'class'`, allowing
+for Python keyword arguments to be written as `_class="marker"`. The
+CoffeeScript and Ruby versions will do the same, even though it's less
+necessary.
 
 ### Python
 
