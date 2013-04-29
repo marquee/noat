@@ -150,7 +150,7 @@ def _addTextAnnotations(text, annotations):
         if start != end:
             segments.append(text[start:end])
 
-    output = u''
+    output = []
     open_tags = []
     i = 0
 
@@ -166,31 +166,31 @@ def _addTextAnnotations(text, annotations):
             # any open tags, which should not be true at this point.)
             while len(open_tags) > 0 and t['tag'] != open_tags[-1]['tag']:
                 o_tag = open_tags.pop()
-                output += _closeTag(o_tag)
+                output.append(_closeTag(o_tag))
                 tags_to_reopen.append(o_tag)
 
             # Close the annotation.
-            output += _closeTag(t)
+            output.append(_closeTag(t))
             open_tags.pop()
 
             # Reopen annotations that were closed to prevent overlap.
             while len(tags_to_reopen) > 0:
                 o_tag = tags_to_reopen.pop()
-                output += _openTag(o_tag)
+                output.append(_openTag(o_tag))
                 open_tags.append(o_tag)
 
         # Open the tags that start at this point.
         for t in tags_to_open:
-            output += _openTag(t)
+            output.append(_openTag(t))
             # Unless the tag also closes at this point, add it to the stack of
             # open tags. Otherwise, close it.
             if t['start'] != t['end']:
                 open_tags.append(t)
             else:
-                output += _closeTag(t)
+                output.append(_closeTag(t))
 
         # Add the segment text content.
-        output += seg_text
+        output.append(seg_text)
 
         i += len(seg_text)
 
@@ -198,9 +198,10 @@ def _addTextAnnotations(text, annotations):
     # end at the end of the target string).
     while open_tags:
         o_tag = open_tags.pop()
-        output += _closeTag(o_tag)
+        output.append(_closeTag(o_tag))
 
 
-    return output
+    return u''.join(output)
+
 
 
