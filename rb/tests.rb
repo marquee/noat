@@ -14,6 +14,19 @@ end
 require './noat.rb'
 
 
+markup = NOAT.new('')
+target = ''
+assertEqual('emptyString', markup.to_s(), target)
+
+
+
+markup = NOAT.new('')
+target = '<em></em>'
+markup.add('em', 0)
+assertEqual('emptyStringWithAnnotation', markup.to_s(), target)
+
+
+
 markup = NOAT.new('0123456789')
 target = '0123456789'
 assertEqual('noAnnotations', markup.to_s(), target)

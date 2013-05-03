@@ -29,10 +29,26 @@ test = (name, fn) ->
 
 
 
+test 'emptyString', ->
+    markup = new NOAT('')
+    target = ''
+    equal(markup.toString(), target)
+
+
+
+test 'emptyStringWithAnnotation', ->
+    markup = new NOAT('')
+    target = '<em></em>'
+    markup.add('em', 0)
+    equal(markup.toString(), target)
+
+
+
 test 'noAnnotations', ->
     markup = new NOAT('0123456789')
     target = '0123456789'
     equal(markup.toString(), target)
+
 
 
 test 'singleAnnotationSubstring', ->

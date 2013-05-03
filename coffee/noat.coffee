@@ -4,15 +4,15 @@ https://github.com/droptype/noat
 
 # Public: class that manages the public API and stores the working data.
 #
-# * text - A non-empty string of arbitrary content, to have annotations applied
+# * text - A string of arbitrary content, to have annotations applied. The
+#            string MAY be empty, but then its annotations MUST only cover
+#            the position 0.
 #
 # The instance is lazy in its application of the annotations. It stores them
 # in a list, but only generates the markup when the instance's `.toString`
 # is called.
 class NOAT
     constructor: (text) ->
-        if text.length is 0
-            throw new Error('text length must be greater than zero')
         @text           = text
         @annotations    = []
         @_markup        = null
@@ -30,13 +30,15 @@ class NOAT
     ###
     add: (tag, start, end_or_attrs, attrs={}) ->
         if arguments.length > 4
-            throw new Error("add() takes 3 or 4 arguments (#{ arguments.length } given)")
+            throw new Error("add() takes 2, 3 or 4 arguments (#{ arguments.length } given)")
 
         if typeof end_or_attrs isnt 'number'
             end = start
             attrs = end_or_attrs
         else
             end = end_or_attrs
+
+        end = start if not end
 
         start = parseInt(start)
         end = parseInt(end)
@@ -133,6 +135,11 @@ _addTextAnnotations = (text, annotations) ->
         end = segment_boundaries[parseInt(i)+1]
         if start != end
             segments.push(text.substring(start,end))
+
+    # Always have at least one segment, even if empty, to allow for adding
+    # annotations to empty strings.
+    if segments.length is 0
+        segments.push('')
 
     output = ''
     open_tags = []

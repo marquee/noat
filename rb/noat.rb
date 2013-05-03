@@ -3,16 +3,15 @@
 
 # Public: class that manages the public API and stores the working data.
 #
-# * text - A non-empty string of arbitrary content, to have annotations applied
+# * text - A string of arbitrary content, to have annotations applied. The
+#            string MAY be empty, but then its annotations MUST only cover
+#            the position 0.
 #
 # The instance is lazy in its application of the annotations. It stores them
 # in a list, but only generates the markup when the instance's `.to_s`
 # is called.
 class NOAT
     def initialize(text)
-        if text.length == 0
-            raise 'text length must be greater than zero'
-        end
         @text = text
         @_markup = nil
         @annotations = []
@@ -28,7 +27,7 @@ class NOAT
     #               closed immediately, eg `...blah<span></span>blah...`).
     # * attrs   - (optional) - A hash of key-value attributes to be added to
     #               the tag, eg `{ :id => 'foo' }` becomes `id="foo"`.
-    def add(tag, a_start, a_end_or_attrs, attrs={})
+    def add(tag, a_start, a_end_or_attrs=nil, attrs=nil)
         a_start = a_start.to_i()
 
         if a_end_or_attrs.is_a? Integer or a_end_or_attrs.is_a? Float
@@ -36,6 +35,14 @@ class NOAT
         else
             a_end = a_start
             attrs = a_end_or_attrs
+        end
+
+        if a_end.nil?
+            a_end = a_start
+        end
+
+        if attrs.nil?
+            attrs = {}
         end
 
         a_end = a_end.to_i()
@@ -152,6 +159,12 @@ def _addTextAnnotations(text, annotations)
         if s_start != s_end
             segments.push(text[s_start...s_end])
         end
+    end
+
+    # Always have at least one segment, even if empty, to allow for adding
+    # annotations to empty strings.
+    if segments.length == 0
+        segments.push('')
     end
 
     output = ''

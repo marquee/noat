@@ -18,6 +18,21 @@ def checkMarkupAsString(markup, target):
 
 
 
+def test_emptyString():
+    markup = NOAT('')
+    target = ''
+    checkMarkupAsString(markup, target)
+
+
+
+def test_emptyStringWithAnnotations():
+    markup = NOAT('')
+    target = '<em></em>'
+    markup.add('em', 0)
+    checkMarkupAsString(markup, target)
+
+
+
 def test_noAnnotations():
     markup = NOAT('0123456789')
     target = '0123456789'

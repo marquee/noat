@@ -1,15 +1,15 @@
 
 # Public: class that manages the public API and stores the working data.
 #
-# * text - A non-empty string of arbitrary content, to have annotations applied
+# * text - A string of arbitrary content, to have annotations applied. The
+#            string MAY be empty, but then its annotations MUST only cover
+#            the position 0.
 #
 # The instance is lazy in its application of the annotations. It stores them
 # in a list, but only generates the markup when the instance's `.__str__`
 # is called.
 class NOAT(object):
     def __init__(self, text):
-        if len(text) == 0:
-            raise ValueError('text length must be greater than zero')
         self.text           = text
         self.annotations    = []
         self._markup        = None
@@ -142,6 +142,8 @@ def _addTextAnnotations(text, annotations):
     if segment_boundaries[-1] != len(text):
         segment_boundaries.append(len(text))
 
+    print(segment_boundaries)
+
     # Extract the actual text content for each segment.
     segments = []
     for i, bound in enumerate(segment_boundaries[:-1]):
@@ -149,6 +151,11 @@ def _addTextAnnotations(text, annotations):
         end = segment_boundaries[i+1]
         if start != end:
             segments.append(text[start:end])
+
+    # Always have at least one segment, even if empty, to allow for adding
+    # annotations to empty strings.
+    if len(segments) == 0:
+        segments.append('')
 
     output = []
     open_tags = []
