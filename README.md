@@ -50,9 +50,9 @@ annotation is then reopened with a `<strong>` and then closed at its actual end.
 
 ## Usage
 
-NOAT is available in three flavors: Python, CoffeeScript, and Ruby. The API is
-basically the same, with some slight differences for language variations. In
-every case, the adding of annotations is lazy, so the actual markup is not
+NOAT is available in three flavors: Python (2&3), CoffeeScript, and Ruby. The
+API is basically the same, with some slight differences for language variations.
+In every case, the adding of annotations is lazy, so the actual markup is not
 generated until the `__str__`, `toString`, or `to_s` method is called.
 
 There are no dependencies, and even the tests can just be run directly, eg

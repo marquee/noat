@@ -36,7 +36,7 @@ class NOAT(object):
         elif len(args) == 0:
             end = start
         else:
-            raise TypeError('add() takes 2, 3, or 4 arguments (%s given)' % (len(args) + 2,) )
+            raise TypeError('add() takes 2, 3, or 4 arguments ({0} given)'.format(len(args) + 2))
 
         start = int(start)
 
@@ -70,16 +70,16 @@ class NOAT(object):
         return self._markup
 
     def __repr__(self):
-        return 'NOAT(\'%s\')' % (self.text,)
+        return "NOAT('{0}')".format(self.text)
 
 
     def _validateRange(self, start, end):
         if start > end:
-            raise IndexError('start (%s) must be <= end (%s)' % (start, end))
+            raise IndexError('start ({0}) must be <= end ({1})'.format(start, end))
         if start < 0:
-            raise IndexError('start (%s) must be >= 0' % (start,))
+            raise IndexError('start ({0}) must be >= 0'.format(start))
         if end > len(self.text):
-            raise IndexError('end (%s) must be <= length of text (%s)' % (end, len(self.text)))
+            raise IndexError('end ({0}) must be <= length of text ({1})'.format(end, len(self.text)))
 
 def _openTag(t):
     attrs = ''
@@ -88,11 +88,11 @@ def _openTag(t):
         # reserved word and akward to use in kwargs otherwise.
         if k == '_class':
             k = 'class'
-        attrs += ' %s="%s"' % (k, v)
-    return '<%s%s>' % (t['tag'],attrs)
+        attrs += ' {0}="{1}"'.format(k, v)
+    return '<{0}{1}>'.format(t['tag'],attrs)
 
 def _closeTag(t):
-    return '</%s>' % (t['tag'],)
+    return '</{0}>'.format(t['tag'],)
 
 def _addTextAnnotations(text, annotations):
     """
@@ -133,7 +133,7 @@ def _addTextAnnotations(text, annotations):
 
     # Find the segment boundaries of text, as bounded by opening and closing
     # tags (equivalent to the text nodes in the HTML DOM).
-    segment_boundaries = annotation_index_by_start.keys() + annotation_index_by_end.keys()
+    segment_boundaries = list(annotation_index_by_start.keys()) + list(annotation_index_by_end.keys())
     segment_boundaries.sort()
 
     # Make sure the segments include the beginning and end of the text.

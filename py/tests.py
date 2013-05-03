@@ -1,13 +1,20 @@
 # coding: utf-8
 
+from __future__ import print_function, unicode_literals
+
 from noat import NOAT
 
 
 def checkMarkupAsString(markup, target):
     try:
-        assert(unicode(markup) == target)
+        # Allow for multiple targets since the attributes may be ordered
+        # differently, but still correct.
+        if not hasattr(target, '__iter__'):
+            target = [target]
+        # Call the __str__ directly because of py2/py3 compatibility.
+        assert(markup.__str__() in target)
     except AssertionError:
-        raise AssertionError(u'"%s"' % (markup,) + ' does not equal ' + u'"%s"' % (target,))
+        raise AssertionError('"%s"' % (markup,) + ' does not equal ' + '"%s"' % (target,))
 
 
 
@@ -27,8 +34,8 @@ def test_singleAnnotationSubstring():
 
 
 def test_singleAnnotationUnicode():
-    markup = NOAT(u'0123456789é')
-    target = u'012<em>3456</em>789é'
+    markup = NOAT('0123456789é')
+    target = '012<em>3456</em>789é'
     markup.add('em', 3, 7)
     checkMarkupAsString(markup, target)
 
@@ -44,9 +51,10 @@ def test_singleAnnotationWithSingleAttribute():
 
 def test_singleAnnotationWithMultipleAttributes():
     markup = NOAT('0123456789')
-    target = '0<a href="/" id="foo">123</a>456789'
+    target_a = '0<a href="/" id="foo">123</a>456789'
+    target_b = '0<a id="foo" href="/">123</a>456789'
     markup.add('a', 1, 4, href='/', id='foo')
-    checkMarkupAsString(markup, target)
+    checkMarkupAsString(markup, [target_a, target_b])
 
 
 
@@ -171,20 +179,20 @@ def test_attributesAsDictAndKwargs():
 
 passed = []
 failed = []
-for k, v in globals().items():
+for k, v in list(globals().items()):
     if k.find('test_') == 0:
         try:
             v()
         except Exception as e:
-            print 'F', k
+            print('F', k)
             failed.append([k, e])
         else:
-            print '.'
+            print('.')
             passed.append(k)
 
-print len(passed), 'passed'
-print len(failed), 'failed'
-print
+print(len(passed), 'passed')
+print(len(failed), 'failed')
+print()
 
 for failure in failed:
-    print failure
+    print(failure)
