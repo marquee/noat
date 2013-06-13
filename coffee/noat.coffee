@@ -180,9 +180,9 @@ _addTextAnnotations = (text, annotations) ->
             else
                 output += _closeTag(t)
 
-        # Add the segment text content.
-        output += seg_text
-
+        # Add the escaped segment text content, but track the length of the
+        # original text to preserve annotation positions.
+        output += _escapeHTML(seg_text)
         i += seg_text.length
 
     # Close any tags that are still open (should only be any that are set to
@@ -193,6 +193,10 @@ _addTextAnnotations = (text, annotations) ->
 
 
     return output
+
+# Escape HTML entities.
+_escapeHTML = (str) ->
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 
 
 if module?.exports?

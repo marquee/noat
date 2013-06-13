@@ -1,6 +1,8 @@
 # https://github.com/droptype/noat
 
 
+require 'cgi'
+
 # Public: class that manages the public API and stores the working data.
 #
 # * text - A string of arbitrary content, to have annotations applied. The
@@ -211,8 +213,9 @@ def _addTextAnnotations(text, annotations)
             end
         end
 
-        output += seg_text
-
+        # Add the escaped segment text content, but track the length of the
+        # original text to preserve annotation positions.
+        output += CGI::escapeHTML(seg_text)
         i += seg_text.length
     end
 

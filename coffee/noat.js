@@ -5,7 +5,7 @@ https://github.com/droptype/noat
 
 
 (function() {
-  var NOAT, _addTextAnnotations, _closeTag, _openTag;
+  var NOAT, _addTextAnnotations, _closeTag, _escapeHTML, _openTag;
 
   NOAT = (function() {
     function NOAT(text) {
@@ -184,7 +184,7 @@ https://github.com/droptype/noat
           output += _closeTag(t);
         }
       }
-      output += seg_text;
+      output += _escapeHTML(seg_text);
       i += seg_text.length;
     }
     while (open_tags.length > 0) {
@@ -192,6 +192,10 @@ https://github.com/droptype/noat
       output += _closeTag(o_tag);
     }
     return output;
+  };
+
+  _escapeHTML = function(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   };
 
   if ((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) {

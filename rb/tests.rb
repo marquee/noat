@@ -105,6 +105,13 @@ assertEqual('substituteClass', markup.to_s(), target)
 
 
 
+markup = NOAT.new('0123<&6789')
+target = '012<em>3&lt;&amp;6</em>789'
+markup.add('em', 3, 7)
+assertEqual('singleAnnotationAndEscaping', markup.to_s(), target)
+
+
+
 markup = NOAT.new('0123456789')
 begin
     markup.add('em', 7, 4)

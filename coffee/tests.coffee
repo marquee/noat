@@ -172,6 +172,13 @@ test 'invalidEndRange', ->
 
 
 
+test 'singleAnnotationAndEscaping', ->
+    markup = new NOAT('0123<&6789')
+    target = '012<em>3&lt;&amp;6</em>789'
+    markup.add('em', 3, 7)
+    equal(markup.toString(), target)
+
+
 
 for t in failed
     console.log '\n'

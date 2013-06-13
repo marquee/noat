@@ -1,3 +1,6 @@
+# https://github.com/droptype/noat
+
+import cgi
 
 # Public: class that manages the public API and stores the working data.
 #
@@ -196,9 +199,9 @@ def _addTextAnnotations(text, annotations):
             else:
                 output.append(_closeTag(t))
 
-        # Add the segment text content.
-        output.append(seg_text)
-
+        # Add the escaped segment text content, but track the length of the
+        # original text to preserve annotation positions.
+        output.append(cgi.escape(seg_text))
         i += len(seg_text)
 
     # Close any tags that are still open (should only be any that are set to

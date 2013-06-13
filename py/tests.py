@@ -189,6 +189,13 @@ def test_attributesAsDictAndKwargs():
 
 
 
+def test_singleAnnotationAndEscaping():
+    markup = NOAT('0123<&6789')
+    target = '012<em>3&lt;&amp;6</em>789'
+    markup.add('em', 3, 7)
+    checkMarkupAsString(markup, target)
+
+
 
 # Microrunner
 
