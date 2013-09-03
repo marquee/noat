@@ -55,6 +55,9 @@ API is basically the same, with some slight differences for language variations.
 In every case, the adding of annotations is lazy, so the actual markup is not
 generated until the `__str__`, `toString`, or `to_s` method is called.
 
+To install, simply include the `noat.<ext>` file where necessary. (Python users
+can `pip install noat` as well.)
+
 There are no dependencies, and even the tests can just be run directly, eg
 `python tests.py`.
 
