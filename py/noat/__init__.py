@@ -145,8 +145,6 @@ def _addTextAnnotations(text, annotations):
     if segment_boundaries[-1] != len(text):
         segment_boundaries.append(len(text))
 
-    print(segment_boundaries)
-
     # Extract the actual text content for each segment.
     segments = []
     for i, bound in enumerate(segment_boundaries[:-1]):
