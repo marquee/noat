@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
         name                = 'noat',
-        version             = '1.0.0',
+        version             = '1.0.1',
         description         = 'Non-overlapping annotation HTML tag insertion.',
         long_description    = file('README.md').read(),
         url                 = 'https://github.com/droptype/noat',

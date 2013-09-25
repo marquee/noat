@@ -73,7 +73,7 @@ class NOAT(object):
         return self._markup
 
     def __repr__(self):
-        return "NOAT('{0}')".format(self.text)
+        return u"NOAT('{0}')".format(self.text)
 
 
     def _validateRange(self, start, end):
@@ -91,11 +91,11 @@ def _openTag(t):
         # reserved word and akward to use in kwargs otherwise.
         if k == '_class':
             k = 'class'
-        attrs += ' {0}="{1}"'.format(k, v)
-    return '<{0}{1}>'.format(t['tag'],attrs)
+        attrs += u' {0}="{1}"'.format(k, v)
+    return u'<{0}{1}>'.format(t['tag'],attrs)
 
 def _closeTag(t):
-    return '</{0}>'.format(t['tag'],)
+    return u'</{0}>'.format(t['tag'],)
 
 def _addTextAnnotations(text, annotations):
     """

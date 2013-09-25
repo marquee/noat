@@ -53,6 +53,13 @@ assertEqual('singleAnnotationWithSingleAttribute', markup.to_s(), target)
 
 
 markup = NOAT.new('0123456789')
+target = '0<a class="é">123</a>456789'
+markup.add('a', 1, 4, {:class => 'é'})
+assertEqual('singleAnnotationWithUnicodeAttribute', markup.to_s(), target)
+
+
+
+markup = NOAT.new('0123456789')
 target = '0<a href="/" id="foo">123</a>456789'
 markup.add('a', 1, 4, {:href => '/', :id => 'foo'})
 assertEqual('singleAnnotationWithMultipleAttributes', markup.to_s(), target)
