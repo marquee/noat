@@ -72,6 +72,14 @@ def test_singleAnnotationWithUnicodeAttribute():
 
 
 
+def test_singleAnnotationWithEntityAttribute():
+    markup = NOAT('0123456789')
+    target = u'0<a href="?foo=false&amp;bar=true">123</a>456789'
+    markup.add('a', 1, 4, href=u'?foo=false&bar=true')
+    checkMarkupAsString(markup, target)
+
+
+
 def test_singleAnnotationWithMultipleAttributes():
     markup = NOAT('0123456789')
     target_a = '0<a href="/" id="foo">123</a>456789'

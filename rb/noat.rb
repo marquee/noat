@@ -1,4 +1,4 @@
-# https://github.com/droptype/noat
+# https://github.com/marquee/noat
 
 
 require 'cgi'
@@ -94,7 +94,7 @@ def _openTag(t)
         if k == '_class'  # for consistency with Python version
             k = 'class'
         end
-        attrs += " #{k}=\"#{v}\""
+        attrs += " #{k}=\"#{CGI::escapeHTML(v)}\""
     end
     return "<#{t[:tag]}#{attrs}>"
 end

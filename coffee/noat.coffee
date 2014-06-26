@@ -1,5 +1,5 @@
 ###
-https://github.com/droptype/noat
+https://github.com/marquee/noat
 ###
 
 # Public: class that manages the public API and stores the working data.
@@ -74,7 +74,7 @@ _openTag = (t) ->
     for k, v of t.attrs
         if k is '_class' # for consistency with Python version
             k = 'class'
-        attrs += " #{k}=\"#{v}\""
+        attrs += " #{k}=\"#{_escapeHTML(v)}\""
     return "<#{t.tag}#{attrs}>"
 
 _closeTag = (t) ->

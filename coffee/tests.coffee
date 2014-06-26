@@ -83,6 +83,14 @@ test 'singleAnnotationWithUnicodeAttribute', ->
 
 
 
+test 'singleAnnotationWithEntityAttribute', ->
+    markup = new NOAT('0123456789')
+    target = '0<a href="?foo=false&amp;bar=true">123</a>456789'
+    markup.add('a', 1, 4, {href: '?foo=false&bar=true'})
+    equal(markup.toString(), target)
+
+
+
 test 'singleAnnotationWithMultipleAttributes', ->
     markup = new NOAT('0123456789')
     target = '0<a href="/" id="foo">123</a>456789'

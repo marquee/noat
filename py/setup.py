@@ -2,12 +2,12 @@ from setuptools import setup
 
 setup(
         name                = 'noat',
-        version             = '1.0.1',
+        version             = '1.0.2',
         description         = 'Non-overlapping annotation HTML tag insertion.',
         long_description    = file('README.md').read(),
-        url                 = 'https://github.com/droptype/noat',
+        url                 = 'https://github.com/marquee/noat',
         author              = 'Alec Perkins',
-        author_email        = 'alec@droptype.com',
+        author_email        = 'alec@marquee.by',
         license             = 'UNLICENSE',
         packages            = ['noat'],
         zip_safe            = False,

@@ -1,4 +1,4 @@
-# https://github.com/droptype/noat
+# https://github.com/marquee/noat
 
 import cgi
 
@@ -91,7 +91,7 @@ def _openTag(t):
         # reserved word and akward to use in kwargs otherwise.
         if k == '_class':
             k = 'class'
-        attrs += u' {0}="{1}"'.format(k, v)
+        attrs += u' {0}="{1}"'.format(k, cgi.escape(v))
     return u'<{0}{1}>'.format(t['tag'],attrs)
 
 def _closeTag(t):
